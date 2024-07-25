@@ -9,30 +9,20 @@ sl = soup.dl.dl
 
 folders = []
 
-for item in sl.find_all('h3'):
+for item in sl.find_all('dl', recursive=False):
     folders.append(item.text)
 
-for folder in folders:
-    if sl.find(string=folder).parent.parent.next_sibling:
-        pprint.pprint(sl.find(string=folder).parent.parent.next_sibling.find_all('a'))
-    print()
+bookmarks_dict = {}
+for item in sl.find_all('dl', recursive=False):
+    bookmarks_dict[item.previous_sibling.text.rstrip()] = item
 
-# links = soup.find_all('a')
-# folders = soup.find_all('h3')
+def printBookmarks(bookmark_dict: dict) -> None:
+    for key, value in bookmark_dict.items():
+        print(key)
+        print()
+        print(value)
+        print()
+        print()
+        print('-----------------------------------------------------------------------------------')
 
-# bookmarkDict = {}
-
-
-
-# main_list = soup.find('dl')
-# # personal_toolbar_folder = main_list.find('h3')
-
-# secondary_list = main_list.find('dl')
-# for item in secondary_list.find_all(last_modified=True):
-#     # print(str(item))
-#     bookmarkDict[item] = []
-
-# pprint.pp(bookmarkDict)
-
-# # for child in secondary_list.contents:
-# #     print(child.dt)
+printBookmarks(bookmarks_dict)
