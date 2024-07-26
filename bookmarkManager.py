@@ -47,32 +47,32 @@ def collectItens(bms: bs4.element.ResultSet) -> dict:
 
     for tag in bms:
         if isLink(tag):
+            print("LINK")
+            print(index)
+            print(tag)
+            print(line)
             bookmarksDict[base].append(tag)
             previous_tag = tag
             index += 1
         elif isFolderTitle(tag):
+            print("TITLE")
+            print(index)
+            print(tag)
+            print(line)
             bookmarksDict[base].append({tag: ['testing']})
             previous_tag = tag
             index += 1
-        else:
+        elif isFolderList(tag):
+            print("LIST")
+            print(index)
+            print(tag)
+            print(bookmarksDict[base][index - 1])
+            print(line)
+            bookmarksDict[base][index - 1][previous_tag] = tag
             previous_tag = tag
-            index += 1
     return bookmarksDict
 
 
 bms = sl.find_all(['a', 'dt', 'dl'], recursive=False)
 
 collectItens(bms)
-
-for item in bookmarksDict[base]:
-    print(item)
-    print(line)
-
-# def printsl() -> None:
-#     for item in sl.find_all(['a', 'dt', 'dl'], recursive=False):
-#         print(type(item))
-#         print(item.prettify())
-#         print(line)
-
-
-# printsl()
