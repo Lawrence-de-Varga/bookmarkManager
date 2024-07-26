@@ -29,6 +29,14 @@ def isFolderTitle(tag: bs4.element.tag) -> bool:
     else:
         return False
 
+
+def isFolderList(tag: bs4.element.tag) -> bool:
+    if (not isLink(tag) and not isFolderTitle(tag)):
+        return True
+    else:
+        return False
+
+
 def printsl() -> None:
     for item in sl.find_all(['a', 'dt', 'dl'], recursive=False):
         print(type(item))
