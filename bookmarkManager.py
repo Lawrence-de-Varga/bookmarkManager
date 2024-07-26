@@ -16,6 +16,13 @@ base = soup.dl.dt
 sl = soup.dl.dl
 
 
+def isLink(tag: bs4.element.tag) -> bool:
+    if tag.find('a', recursive=False):
+        return True
+    else:
+        return False
+
+
 def printsl() -> None:
     for item in sl.find_all(['a', 'dt', 'dl'], recursive=False):
         print(type(item))
