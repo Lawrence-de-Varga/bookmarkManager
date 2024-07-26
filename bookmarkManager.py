@@ -23,6 +23,12 @@ def isLink(tag: bs4.element.tag) -> bool:
         return False
 
 
+def isFolderTitle(tag: bs4.element.tag) -> bool:
+    if tag.find('h3', recursive=False):
+        return True
+    else:
+        return False
+
 def printsl() -> None:
     for item in sl.find_all(['a', 'dt', 'dl'], recursive=False):
         print(type(item))
