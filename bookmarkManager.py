@@ -43,11 +43,11 @@ def isFolderList(item: bs4.element.Tag) -> bool:
         return False
 
 
-bookmarksDict = {}
-bookmarksDict[base] = []
+bookmarksDict: dict[bs4.element.Tag, list] = {}
+bookmarksDict[base]: list[bs4.element.Tag | dict] = []
 
 
-def collectItems(bms: bs4.element.ResultSet, root: bs4.element.Tag, bmsDict: dict) -> dict:
+def collectItems(bms: bs4.element.ResultSet, root: bs4.element.Tag, bmsDict: dict) -> dict[bs4.element.Tag, dict]:
     previous_tag = ''
     index = 0
 
