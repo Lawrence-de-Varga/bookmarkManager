@@ -38,6 +38,14 @@ def find_link_path(link: bs4.element.Tag, bmdict: dict) -> list:
             index += 1
     return path
 
+
+def delete_link(link: bs4.element.Tag, path: list, bmdict: dict) -> dict:
+    if len(path) == 1:
+        bmdict.remove(link)
+    else:
+        delete_link(link, path[1:], bmdict[path[0]])
+    
+
     
 # def process_link(link: bs4.element.Tag, current_location: dict, current_location_key: bs4.element.Tag) -> dict:
 #     print_link(link)
