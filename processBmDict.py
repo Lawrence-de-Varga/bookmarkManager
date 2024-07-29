@@ -66,7 +66,12 @@ def replace_item(item: dict | bs4.element.Tag, new_item: dict | bs4.element.Tag,
         replace_item(item, new_item, path[1:], bmdict[path[0]])
 
 
-def replace_for_deletion(item: dict | bs4.element.Tag, bmdict) -> None:
+# Repalce_for_deletion is used to maintain te validity of a given path while
+# moving links or folders around. The item to be moved is first modifed
+# by replace_for_deletion, the unmodified item is then moved to
+# its new location, and the the modified item is found again
+# as its path may have changed, it is then deleted.
+def replace_for_deletion(item: dict | bs4.element.Tag, bmdict) -> bs4.element.Tag | dict:
     path = find_item(item, bmdict)
     new_item = copy.deepcopy(item)
     if isinstance(item, dict):
@@ -74,12 +79,13 @@ def replace_for_deletion(item: dict | bs4.element.Tag, bmdict) -> None:
     else:
         new_item.a.string = "DELETE ME"
     replace_item(item, new_item, path, bmdict)
+    return new_item
 
 
-def move_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> dict:
-    delete_item(item, find_item(item, bmdict), bmdict)
+def move_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> None:
+    old_item = replace_for_deletion(item, bmdict)
     add_item(item, path, bmdict)
-    return bmdict
+    delete_item(old_item, find_item(old_item, bmdict), bmdict)
 
 
 test_folder = bookmarksDict[base][5][extract_key(bookmarksDict[base][5])][1]
