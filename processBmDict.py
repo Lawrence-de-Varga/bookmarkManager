@@ -66,6 +66,16 @@ def replace_item(item: dict | bs4.element.Tag, new_item: dict | bs4.element.Tag,
         replace_item(item, new_item, path[1:], bmdict[path[0]])
 
 
+def replace_for_deletion(item: dict | bs4.element.Tag, bmdict) -> None:
+    path = find_item(item, bmdict)
+    new_item = copy.deepcopy(item)
+    if isinstance(item, dict):
+        extract_key(new_item).h3.string = "DELETE ME"
+    else:
+        new_item.a.string = "DELETE ME"
+    replace_item(item, new_item, path, bmdict)
+
+
 def move_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> dict:
     delete_item(item, find_item(item, bmdict), bmdict)
     add_item(item, path, bmdict)
