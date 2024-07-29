@@ -1,5 +1,5 @@
 import bs4
-from bookmarkManager import bookmarksDict, line
+from bookmarkManager import bookmarksDict, line, base
 import copy
 
 # The bookmarksDict is not manipulated as that would mess with the index
@@ -20,18 +20,18 @@ def extract_key(bmdict: dict) -> bs4.element.Tag:
 # of keys and indexs necessary to access it.
 # It currently returns [extract_key(bmdict)] when link is not in
 # the bmdict.
-def find_item(link: dict | bs4.element.Tag, bmdict: dict) -> list:
+def find_item(item: dict | bs4.element.Tag, bmdict: dict) -> list:
     root = extract_key(bmdict)
     path = [root]
     index = 0
-    for item in bmdict[root]:
-        if item == link:
-            path.append(bmdict[root].index(item))
+    for obj in bmdict[root]:
+        if obj == item:
+            path.append(bmdict[root].index(obj))
             return path
-        elif isinstance(item, dict):
-            possible_path = find_item(link, item)
+        elif isinstance(obj, dict):
+            possible_path = find_item(item, obj)
             if isinstance(possible_path[-1], int):
-                ind = bmdict[root].index(item)
+                ind = bmdict[root].index(obj)
                 path.append(ind)
                 path = path + possible_path
                 return path
@@ -44,11 +44,15 @@ def find_item(link: dict | bs4.element.Tag, bmdict: dict) -> list:
     return path
 
 
-def delete_item(link: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> dict:
+def delete_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> dict:
     if len(path) == 1:
-        bmdict.remove(link)
+        bmdict.remove(item)
     else:
-        delete_item(link, path[1:], bmdict[path[0]])
+        delete_item(item, path[1:], bmdict[path[0]])
 
 
-# processBmDict(bookmarksDict, base)
+def add_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> dict:
+    if len(path) == 1:
+        bmdict[path[0]][extract_key(bmdict[path[0]])].append(item)
+    else:
+        add_item(item, path[1:], bmdict[path[0]])
