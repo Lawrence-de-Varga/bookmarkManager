@@ -44,15 +44,35 @@ def find_item(item: dict | bs4.element.Tag, bmdict: dict) -> list:
     return path
 
 
-def delete_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> dict:
+def delete_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> None:
     if len(path) == 1:
         bmdict.remove(item)
     else:
         delete_item(item, path[1:], bmdict[path[0]])
 
 
-def add_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> dict:
+def add_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> None:
     if len(path) == 1:
         bmdict[path[0]][extract_key(bmdict[path[0]])].append(item)
     else:
         add_item(item, path[1:], bmdict[path[0]])
+
+
+def replace_item(item: dict | bs4.element.Tag, new_item: dict | bs4.element.Tag,
+                 path: list[bs4.element.Tag | int], bmdict: dict | list) -> None:
+    if len(path) == 1:
+        bmdict[path[0]] = new_item
+    else:
+        replace_item(item, new_item, path[1:], bmdict[path[0]])
+
+
+def move_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> dict:
+    delete_item(item, find_item(item, bmdict), bmdict)
+    add_item(item, path, bmdict)
+    return bmdict
+
+
+test_folder = bookmarksDict[base][5][extract_key(bookmarksDict[base][5])][1]
+test_link = bookmarksDict[base][1]
+tfp = find_item(test_folder, bookmarksDict)
+tlp = find_item(test_link, bookmarksDict)
