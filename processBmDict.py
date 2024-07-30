@@ -12,6 +12,8 @@ def print_link(link: bs4.element.Tag) -> None:
     print(link.text)
 
 
+# Takes a full folder dict and extracts just the folder
+# dt.h3 tag
 def extract_key(bmdict: dict) -> bs4.element.Tag:
     return list(bmdict.keys())[0]
 
