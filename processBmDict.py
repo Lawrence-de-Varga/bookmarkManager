@@ -95,6 +95,7 @@ def rename_folder(folder: dict[bs4.element.Tag, list], new_name: str) -> None:
 
 
 test_folder = bookmarksDict[base][5][extract_key(bookmarksDict[base][5])][1]
+test_link_2 = bookmarksDict[base][5][extract_key(bookmarksDict[base][5])][1][extract_key(test_folder)][1]
 test_link = bookmarksDict[base][1]
 tfp = find_item(test_folder, bookmarksDict)
 tlp = find_item(test_link, bookmarksDict)
