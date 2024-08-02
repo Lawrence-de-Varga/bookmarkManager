@@ -44,9 +44,11 @@ def isFolderList(item: bs4.element.Tag) -> bool:
 
 
 bookmarksDict: dict[bs4.element.Tag, list] = {}
-bookmarksDict[base]: list[bs4.element.Tag | dict] = []
+bookmarksDict[base] = []
 
 
+# Takes the bookmarks htmk file from the browser once modified by cleanBookmarksFile
+# and puts the links into lists as a value of a dict the key of which is the bookmark folder
 def collectItems(bms: bs4.element.ResultSet, root: bs4.element.Tag, bmsDict: dict) -> dict[bs4.element.Tag, dict]:
     previous_tag = ''
     index = 0
@@ -80,9 +82,9 @@ bmResultSet: bs4.element.ResultSet = sl.find_all(['a', 'dt', 'dl'], recursive=Fa
 bookmarksDict[base] = collectItems(bmResultSet, base, bookmarksDict)
 
 # Just for testing
-for item in bookmarksDict[base]:
-    if item is dict:
-        for key, value in item.items():
-            print(key)
-            print(value)
-            print(line)
+# for item in bookmarksDict[base]:
+#     if item is dict:
+#         for key, value in item.items():
+#             print(key)
+#             print(value)
+#             print(line)
