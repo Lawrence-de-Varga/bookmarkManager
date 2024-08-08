@@ -1,3 +1,10 @@
+# This file takes the cleaned up html bookmarks file and returns the 
+# contents of that file is a dict whose keys are bs4 tags of folders
+# and whose values are lists of urls and nested folders
+# as bs4 tags
+
+
+
 import bs4
 from bs4 import BeautifulSoup
 from cleanBookmarkFile import cleanfile
@@ -5,8 +12,8 @@ from cleanBookmarkFile import cleanfile
 # just here for testing to seperate various print statements
 line = '----------------------------------------------------------------------'
 
-# The bookmarks.html file produced by chrome and brave (and any others
-# using the same fomat) does not have closing </DT> tags.
+# The bookmarks.html file produced by chrome 
+# does not have closing </DT> tags.
 # This makes parsing the file extremely clumsy
 # so the file is first modified to add the </DT> tags
 with open(cleanfile('smallbookmarks.html')) as html_file:
