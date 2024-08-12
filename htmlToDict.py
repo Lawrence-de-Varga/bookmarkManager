@@ -16,7 +16,7 @@ line = '----------------------------------------------------------------------'
 # does not have closing </DT> tags.
 # This makes parsing the file extremely clumsy
 # so the file is first modified to add the </DT> tags
-with open(cleanfile('smallbookmarks.html')) as html_file:
+with open(cleanfile('sampleBookmarks/smallbookmarks.html')) as html_file:
     soup = BeautifulSoup(html_file, 'lxml')
 
 

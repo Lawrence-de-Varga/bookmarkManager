@@ -1,7 +1,7 @@
 # This file generates paths to bookmark folders and bookmarks
 
 import bs4
-from printing import get_folder_name, get_link_href
+import printing
 
 
 # Takes a full folder dict and extracts just the folder
@@ -58,9 +58,9 @@ def find_item_from_path(path: list[bs4.element.Tag | dict], bmdict: dict[bs4.ele
 def extract_name_from_path(path: list[bs4.element.Tag | dict], bmdict: dict[bs4.element.Tag, list]) -> str:
     item = find_item_from_path(path, bmdict)
     if isinstance(item, dict):
-        return get_folder_name(item)
+        return printing.get_folder_name(item)
     else:
-        return get_link_href(item)
+        return printing.get_link_href(item)
 
 
 # Extracts just the folder names froma  given path to be used
@@ -88,7 +88,7 @@ def describe_path(link: bs4.element.Tag, bmdict: dict) -> None:
     path = find_item(link, bmdict)
     path_desc = detail_path_description(path_desc_components(path))
 
-    description = f"{get_link_href(link)}"
+    description = f"{printing.get_link_href(link)}"
     for item in path_desc[::-1]:
         description = description + ' ' + item
 
