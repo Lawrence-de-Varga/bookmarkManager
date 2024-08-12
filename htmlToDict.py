@@ -12,6 +12,11 @@ from cleanBookmarkFile import cleanfile
 # just here for testing to seperate various print statements
 line = '----------------------------------------------------------------------'
 
+
+# Defining a few frequently used types
+bmdict = dict[bs4.element.Tag, list[bs4.element.Tag | "bmdict"]]
+bmlist = list[bs4.element.Tag, bmdict]
+
 # The bookmarks.html file produced by chrome 
 # does not have closing </DT> tags.
 # This makes parsing the file extremely clumsy

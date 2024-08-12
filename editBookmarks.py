@@ -5,32 +5,37 @@
 import bs4
 import paths
 import copy
+from htmlToDict import bmdict, bmlist
+
+
+# defining the type path for convenience
+path = list[bs4.element.Tag | int]
 
 # The bookmarksDict is not manipulated as that would mess with the index
 # so a copy is made and then modified as we traverse down bmDict
 # bmDictCp = copy.deepcopy(bookmarksDict)
 
 
-def delete_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> None:
-    if len(path) == 1:
-        bmdict.remove(item)
+def delete_item(item: bmdict | bs4.element.Tag, Apath: path, bmsdict: [bmdict | bmlist]) -> None:
+    if len(Apath) == 1:
+        bmsdict.remove(item)
     else:
-        delete_item(item, path[1:], bmdict[path[0]])
+        delete_item(item, Apath[1:], bmsdict[Apath[0]])
 
 
-def add_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> None:
-    if len(path) == 1:
-        bmdict[path[0]][paths.extract_key(bmdict[path[0]])].append(item)
+def add_item(item: bmdict | bs4.element.Tag, Apath: path, bmsdict: [bmdict | bmlist]) -> None:
+    if len(Apath) == 1:
+        bmsdict[Apath[0]][paths.extract_key(bmsdict[Apath[0]])].append(item)
     else:
-        add_item(item, path[1:], bmdict[path[0]])
+        add_item(item, Apath[1:], bmsdict[Apath[0]])
 
 
-def replace_item(item: dict | bs4.element.Tag, new_item: dict | bs4.element.Tag,
-                 path: list[bs4.element.Tag | int], bmdict: dict | list) -> None:
-    if len(path) == 1:
-        bmdict[path[0]] = new_item
+def replace_item(item: bmdict | bs4.element.Tag, new_item: bmdict | bs4.element.Tag,
+                 Apath: path, bmsdict: [bmdict | bmlist]) -> None:
+    if len(Apath) == 1:
+        bmsdict[Apath[0]] = new_item
     else:
-        replace_item(item, new_item, path[1:], bmdict[path[0]])
+        replace_item(item, new_item, Apath[1:], bmsdict[Apath[0]])
 
 
 # Repalce_for_deletion is used to maintain te validity of a given path while
@@ -38,24 +43,24 @@ def replace_item(item: dict | bs4.element.Tag, new_item: dict | bs4.element.Tag,
 # by replace_for_deletion, the unmodified item is then moved to
 # its new location, and the the modified item is found again
 # as its path may have changed, it is then deleted.
-def replace_for_deletion(item: dict | bs4.element.Tag, bmdict) -> bs4.element.Tag | dict:
-    path = paths.find_item(item, bmdict)
+def replace_for_deletion(item: [bmdict | bs4.element.Tag], bmsdict) -> bs4.element.Tag | bmdict:
+    Apath: path = paths.find_item(item, bmsdict)
     new_item = copy.deepcopy(item)
     if isinstance(item, dict):
         paths.extract_key(new_item).h3.string = "DELETE ME"
     else:
         new_item.a.string = "DELETE ME"
-    replace_item(item, new_item, path, bmdict)
+    replace_item(item, new_item, Apath, bmsdict)
     return new_item
 
 
-def move_item(item: dict | bs4.element.Tag, path: list[bs4.element.Tag | int], bmdict: dict | list) -> None:
-    old_item = replace_for_deletion(item, bmdict)
-    add_item(item, path, bmdict)
-    delete_item(old_item, paths.find_item(old_item, bmdict), bmdict)
+def move_item(item: bmdict | bs4.element.Tag, Apath: path, bmsdict: bmdict | list) -> None:
+    old_item = replace_for_deletion(item, bmsdict)
+    add_item(item, Apath, bmsdict)
+    delete_item(old_item, paths.find_item(old_item, bmsdict), bmsdict)
 
 
-def rename_folder(folder: dict[bs4.element.Tag, list], new_name: str) -> None:
+def rename_folder(folder: bmdict, new_name: str) -> None:
     paths.extract_key(folder).h3.string = new_name
 
 
