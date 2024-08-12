@@ -1,4 +1,4 @@
-import editBookmarks
+import paths
 from htmlToDict import isLink
 import bs4
 
@@ -14,7 +14,7 @@ def print_options(options: list[str]) -> None:
 
 
 def get_folder_name(folder: dict[bs4.element.Tag, list[bs4.element.Tag | dict]]) -> str:
-    return editBookmarks.extract_key(folder).h3.string
+    return paths.extract_key(folder).h3.string
 
 
 def print_folder_name(folder: dict[bs4.element.Tag, list[bs4.element.Tag | dict]]) -> None:

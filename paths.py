@@ -2,12 +2,13 @@
 
 import bs4
 import printing
+from htmlToDict import bmdict, bmlist
 
 
 # Takes a full folder dict and extracts just the folder
 # dt.h3 tag
-def extract_key(bmdict: dict) -> bs4.element.Tag:
-    return list(bmdict.keys())[0]
+def extract_key(bmsdict: bmdict) -> bs4.element.Tag:
+    return list(bmsdict.keys())[0]
 
 
 # This takes a link or a folder and returns the path
