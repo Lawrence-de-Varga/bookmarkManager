@@ -5,7 +5,7 @@ from htmlToDict import bmdict, bmlist, bookmarksDict
 bmbf_list = list[bs4.element.Tag]
 
 
-def collect_folders_h(bmsdict: bmdict, folders_list: bmlist) -> bmlist:
+def collect_folders_h(bmsdict: bmdict, folders_list: bmbf_list) -> bmbf_list:
     root = extract_key(bmsdict)
     folders_list.append(root)
     for item in bmsdict[root]:
@@ -18,3 +18,15 @@ def collect_folders(bmsdict: bmdict) -> bmbf_list:
     return collect_folders_h(bmsdict, [])
 
 
+def collect_links_h(bmsdict: bmdict, links_list: bmbf_list) -> bmbf_list:
+    root = extract_key(bmsdict)
+    for item in bmsdict[root]:
+        if isinstance(item, dict):
+            links_list.extend(collect_links_h(item, []))
+        else:
+            links_list.append(item)
+    return links_list
+
+
+def collect_links(bmsdict: bmdict) -> bmbf_list:
+    return collect_links_h(bmsdict, [])
