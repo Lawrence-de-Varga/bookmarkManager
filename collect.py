@@ -1,8 +1,7 @@
 import bs4
 from paths import extract_key
-from htmlToDict import bmdict, bmlist, bookmarksDict
-
-bmbf_list = list[bs4.element.Tag]
+# from htmlToDict import bookmarksDict
+from typeAliases import bmbf_list, bmdict
 
 
 def collect_folders_h(bmsdict: bmdict, folders_list: bmbf_list) -> bmbf_list:

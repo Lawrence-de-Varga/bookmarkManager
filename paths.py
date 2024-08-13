@@ -2,7 +2,7 @@
 
 import bs4
 import printing
-from htmlToDict import bmdict, bmlist
+from typeAliases import bmdict, bmlist
 
 
 # Takes a full folder dict and extracts just the folder

@@ -1,23 +1,20 @@
-# This file takes the cleaned up html bookmarks file and returns the 
+# This file takes the cleaned up html bookmarks file and returns the
 # contents of that file is a dict whose keys are bs4 tags of folders
 # and whose values are lists of urls and nested folders
 # as bs4 tags
 
 
-
 import bs4
 from bs4 import BeautifulSoup
+from typeAliases import bmdict
 from cleanBookmarkFile import cleanfile
 
 # just here for testing to seperate various print statements
 line = '----------------------------------------------------------------------'
 
 
-# Defining a few frequently used types
-bmlist = list[bs4.element.Tag, "bmdict"]
-bmdict = dict[bs4.element.Tag, bmlist]
 
-# The bookmarks.html file produced by chrome 
+# The bookmarks.html file produced by chrome
 # does not have closing </DT> tags.
 # This makes parsing the file extremely clumsy
 # so the file is first modified to add the </DT> tags
