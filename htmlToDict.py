@@ -14,8 +14,8 @@ line = '----------------------------------------------------------------------'
 
 
 # Defining a few frequently used types
-bmdict = dict[bs4.element.Tag, list[bs4.element.Tag | "bmdict"]]
-bmlist = list[bs4.element.Tag, bmdict]
+bmlist = list[bs4.element.Tag, "bmdict"]
+bmdict = dict[bs4.element.Tag, bmlist]
 
 # The bookmarks.html file produced by chrome 
 # does not have closing </DT> tags.
@@ -55,13 +55,13 @@ def isFolderList(item: bs4.element.Tag) -> bool:
         return False
 
 
-bookmarksDict: dict[bs4.element.Tag, list] = {}
+bookmarksDict: bmdict = {}
 bookmarksDict[base] = []
 
 
 # Takes the bookmarks htmk file from the browser once modified by cleanBookmarksFile
 # and puts the links into lists as a value of a dict the key of which is the bookmark folder
-def collectItems(bms: bs4.element.ResultSet, root: bs4.element.Tag, bmsDict: dict) -> dict[bs4.element.Tag, dict]:
+def collectItems(bms: bs4.element.ResultSet, root: bs4.element.Tag, bmsDict: bmdict) -> bmdict:
     previous_tag = ''
     index = 0
 
