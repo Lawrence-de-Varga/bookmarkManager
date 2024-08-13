@@ -1,5 +1,5 @@
 from typeAliases import bmbf_list
-from printing import get_link_href, get_folder_name
+from printing import get_link_href, folder_name
 
 
 def make_links_presentable(links_list: bmbf_list) -> list[str]:
@@ -7,4 +7,6 @@ def make_links_presentable(links_list: bmbf_list) -> list[str]:
 
 
 def make_folders_presentable(folders_list: bmbf_list) -> list[str]:
-    return list(map(get_folder_name, folders_list))
+    return list(map(folder_name, folders_list))
+
+

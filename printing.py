@@ -17,6 +17,10 @@ def get_folder_name(folder: dict[bs4.element.Tag, list[bs4.element.Tag | dict]])
     return paths.extract_key(folder).h3.string
 
 
+def folder_name(folder: bs4.element.Tag) -> str:
+    return folder.h3.string
+
+
 def print_folder_name(folder: dict[bs4.element.Tag, list[bs4.element.Tag | dict]]) -> None:
     print(get_folder_name(folder))
 
