@@ -5,11 +5,10 @@
 import bs4
 import paths
 import copy
-from htmlToDict import bmdict, bmlist
+from typeAliases import bmdict, bmlist, path
 
 
 # defining the type path for convenience
-path = list[bs4.element.Tag | int]
 
 # The bookmarksDict is not manipulated as that would mess with the index
 # so a copy is made and then modified as we traverse down bmDict

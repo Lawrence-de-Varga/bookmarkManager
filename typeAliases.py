@@ -5,3 +5,4 @@ from typing import Union
 bmbf_list = list[bs4.element.Tag]
 bmlist = list[Union[bs4.element.Tag, "bmdict"]]
 bmdict = dict[bs4.element.Tag, bmlist]
+path = list[bs4.element.Tag | int]
