@@ -1,5 +1,6 @@
 import paths
 from htmlToDict import isLink
+from typeAliases import bmdict
 import bs4
 
 link_options = ['Move', 'Delete']
@@ -13,7 +14,7 @@ def print_options(options: list[str]) -> None:
         index += 1
 
 
-def get_folder_name(folder: dict[bs4.element.Tag, list[bs4.element.Tag | dict]]) -> str:
+def get_folder_name(folder: bmdict) -> str:
     return paths.extract_key(folder).h3.string
 
 
@@ -21,7 +22,7 @@ def folder_name(folder: bs4.element.Tag) -> str:
     return folder.h3.string
 
 
-def print_folder_name(folder: dict[bs4.element.Tag, list[bs4.element.Tag | dict]]) -> None:
+def print_folder_name(folder: bmdict) -> None:
     print(get_folder_name(folder))
 
 
