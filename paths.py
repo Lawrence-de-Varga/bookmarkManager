@@ -84,8 +84,8 @@ def detail_path_description(path_desc: list[str]) -> list[str]:
     return path_desc
 
 
-# Prints {link} is in {folder1} which is in {folder2} etc.
-def describe_path(link: bs4.element.Tag, bmdict: dict) -> None:
+# Returns {link} is in {folder1} which is in {folder2} etc.
+def describe_path(link: bs4.element.Tag, bmdict: dict) -> str:
     path = find_item(link, bmdict)
     path_desc = detail_path_description(path_desc_components(path))
 
@@ -93,4 +93,4 @@ def describe_path(link: bs4.element.Tag, bmdict: dict) -> None:
     for item in path_desc[::-1]:
         description = description + ' ' + item
 
-    print(description)
+    return description

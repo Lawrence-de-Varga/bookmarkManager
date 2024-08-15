@@ -1,6 +1,7 @@
 import bs4
 from typeAliases import bmbf_list
 from printing import get_link_href, folder_name
+from paths import describe_path
 
 
 def make_links_presentable(links_list: bmbf_list) -> list[str]:
@@ -18,3 +19,29 @@ def map_links_to_tags(links_list: list[str], link_tag_list: bmbf_list) -> dict[s
 def map_folders_to_tags(folders_list: list[str], folder_tag_list: bmbf_list) -> dict[str, bs4.element.Tag]:
     return dict(zip(folders_list, folder_tag_list))
     
+
+# def present_folders(folders_list: list[str]) -> None:
+#     for folder in folders_list:
+#         print(folder)
+
+def find_longest(item_list: list[str]) -> int:
+    return len(sorted(item_list, key=len)[-1])
+
+
+def present_folders_h(folders_list: list[str], num_per_line: int, start: int, stop: int, index: int) -> None:
+    length_of_longest = find_longest(folders_list) + len(str(len(folders_list))) + 5
+    if start >= len(folders_list):
+        return
+    for folder in folders_list[start:stop]:
+        print(f" | {index}: {folder}".ljust(length_of_longest), end='')
+        index += 1
+    print(' |', end='')
+    print()
+
+    present_folders_h(folders_list, num_per_line, stop, (stop + num_per_line), index)
+
+
+def present_folders(folders_list: list[str]) -> None:
+    present_folders_h(folders_list, 5, 0, 5, 1)
+
+
