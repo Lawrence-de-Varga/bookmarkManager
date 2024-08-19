@@ -9,7 +9,7 @@ def cleanfile(file):
         f_contents = f.readlines()
         with open('sampleBookmarks/rearranged_bookmarks.html', 'w') as nf:
             for line in f_contents:
-                if '<DT>' in line:
+                if '<DT>' in line and '</DT>' not in line:
                     new_line = line.rstrip() + '</DT>\n'
                     nf.write(new_line)
                 else:
