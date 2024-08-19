@@ -1,7 +1,7 @@
 import bs4
 from typeAliases import bmbf_list
 from printing import get_link_href, folder_name
-from paths import describe_path
+# from paths import describe_path
 
 
 def make_links_presentable(links_list: bmbf_list) -> list[str]:
