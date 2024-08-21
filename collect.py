@@ -5,6 +5,7 @@ from typeAliases import bmbf_list, bmdict
 
 
 def collect_folders_h(bmsdict: bmdict, folders_list: bmbf_list) -> bmbf_list:
+    """Traverses a bmdict and extracts all of the folder tags in a list."""
     root = extract_key(bmsdict)
     folders_list.append(root)
     for item in bmsdict[root]:
@@ -18,6 +19,7 @@ def collect_folders(bmsdict: bmdict) -> bmbf_list:
 
 
 def collect_links_h(bmsdict: bmdict, links_list: bmbf_list) -> bmbf_list:
+    """Traverses a bmdict and collects all of the bookmark tags in a list."""
     root = extract_key(bmsdict)
     for item in bmsdict[root]:
         if isinstance(item, dict):
