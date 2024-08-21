@@ -5,10 +5,14 @@ from printing import get_link_href, folder_name
 
 
 def make_links_presentable(links_list: bmbf_list) -> list[str]:
+    """Takes a list of link bs4 tags and returns a list containing just the
+    url of the tag."""
     return list(map(get_link_href, links_list))
 
 
 def make_folders_presentable(folders_list: bmbf_list) -> list[str]:
+    """Takes a list of folderr bs4 tags and returns a list
+    containing just the folder titles."""
     return list(map(folder_name, folders_list))
 
 
